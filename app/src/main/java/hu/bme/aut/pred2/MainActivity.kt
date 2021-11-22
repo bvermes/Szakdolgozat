@@ -1,5 +1,6 @@
 package hu.bme.aut.pred2
 
+import android.R.attr
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,9 +14,15 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
+import android.R.attr.value
+
+import android.content.Intent
+
+
+
 
 //////
-private val MODEL_ASSETS_PATH = "dfwinnerpredict.tflite"
+private val MODEL_ASSETS_PATH = "dfwinnerpredict1121.tflite"
 private var tflite : Interpreter? = null
 ///////
 
@@ -29,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         tflite = Interpreter( loadModelFile() )
         var ed1 : EditText = findViewById(editTextNumberDecimal)
         var button : Button = findViewById<Button>(button)
+        var teambutton : Button = findViewById<Button>(R.id.teams)
+
+        teambutton.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, TeamActivity::class.java)
+            intent.putExtra("key", 21)
+            startActivity(intent)
+        })
         button.setOnClickListener(View.OnClickListener {
             var v1: Float = ed1.text.toString().toFloat()
             var inputs: Array<Float> = arrayOf(v1, 3F, 3F, 3F, 0F, 10F, 10F, 10F, 1.5F, 3F, 5F)
