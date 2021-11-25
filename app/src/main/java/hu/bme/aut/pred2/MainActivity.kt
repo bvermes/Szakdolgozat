@@ -27,10 +27,14 @@ private var tflite : Interpreter? = null
 ///////
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //val result = mainViewModel.readAll
 
+
+        //Modell implementálás
 //https://github.com/shubham0204/Spam_Classification_Android_Demo/blob/master/app/src/main/java/com/ml/quaterion/spamo/Classifier.kt
 //https://www.youtube.com/watch?v=RhjBDxpAOIc&ab_channel=TensorFlow
         tflite = Interpreter( loadModelFile() )
