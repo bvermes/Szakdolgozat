@@ -31,14 +31,10 @@ private var tflite : Interpreter? = null
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val result by mainViewModel.readAll.collec
 
         //Modell implementálás
 //https://github.com/shubham0204/Spam_Classification_Android_Demo/blob/master/app/src/main/java/com/ml/quaterion/spamo/Classifier.kt
@@ -50,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         teambutton.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, TeamActivity::class.java)
-            intent.putExtra("key", 21)
+            //intent.putExtra("key", 21)
             startActivity(intent)
         })
         button.setOnClickListener(View.OnClickListener {

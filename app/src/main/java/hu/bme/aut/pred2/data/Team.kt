@@ -5,9 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlin.reflect.KProperty
 
+
+//Egy csapatot reprezentáló osztály
 @Entity(tableName = "team")
 data class Team(
-    @ColumnInfo(name = "field1") @PrimaryKey() var id: Long? = null,
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id: Long? = null,
+    @ColumnInfo(name = "field1") var field1: Int,
     @ColumnInfo(name = "teamname") var teamname: String,
     @ColumnInfo(name = "matches_played") var matches_played: Int,
     @ColumnInfo(name = "overall") var overall: Int,
@@ -17,6 +20,7 @@ data class Team(
     @ColumnInfo(name = "ClubWorth") var clubWorth: Float,
     @ColumnInfo(name = "XIAverageAge") var xIAverageAge: Float,
     @ColumnInfo(name = "DefenceWidth") var defenceWidth: Float,
+    @ColumnInfo(name = "DefenceDepth") var defenceDepth: Float,
     @ColumnInfo(name = "OffenceWidth") var offenceWidth: Float,
     @ColumnInfo(name = "Likes") var likes: Float,
     @ColumnInfo(name = "Dislikes") var dislikes: Float,

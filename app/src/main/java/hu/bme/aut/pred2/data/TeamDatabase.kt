@@ -6,17 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = [Team::class], version = 1, exportSchema = true)
+@Database(entities = [Team::class], version = 1)
 abstract class TeamDatabase : RoomDatabase(){
-    abstract fun teamDao():TeamDao
-
+    abstract fun teamDao(): TeamDao
 
     companion object {
         fun getDatabase(applicationContext: Context): TeamDatabase {
             return Room.databaseBuilder(
                 applicationContext,
                 TeamDatabase::class.java,
-                "shopping-list"
+                "team-list"
             ).build();
         }
     }
