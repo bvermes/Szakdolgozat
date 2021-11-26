@@ -6,4 +6,5 @@ class TeamRepository @Inject constructor(
     private val teamDao: TeamDao
 ){
     val readAll = teamDao.readAll()
+    val findAlaves = teamDao.findAlaves()
 }

@@ -1,7 +1,6 @@
 package hu.bme.aut.pred2
 
 import android.R.attr
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -10,6 +9,7 @@ import android.widget.TextView
 import hu.bme.aut.pred2.R.id.button
 import hu.bme.aut.pred2.R.id.editTextNumberDecimal
 import org.tensorflow.lite.Interpreter
+import androidx.fragment.app.activityViewModels
 import java.io.FileInputStream
 import java.io.IOException
 import java.nio.MappedByteBuffer
@@ -17,9 +17,12 @@ import java.nio.channels.FileChannel
 import android.R.attr.value
 
 import android.content.Intent
-
-
-
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import hu.bme.aut.pred2.data.Team
+import hu.bme.aut.pred2.data.TeamDatabase
+import kotlinx.coroutines.flow.collect
+import kotlin.concurrent.thread
 
 //////
 private val MODEL_ASSETS_PATH = "dfwinnerpredict1121.tflite"
@@ -27,12 +30,15 @@ private var tflite : Interpreter? = null
 ///////
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mainViewModel: MainViewModel
+
+    private val mainViewModel: MainViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val result = mainViewModel.readAll
+        val result by mainViewModel.readAll.collec
 
         //Modell implementálás
 //https://github.com/shubham0204/Spam_Classification_Android_Demo/blob/master/app/src/main/java/com/ml/quaterion/spamo/Classifier.kt

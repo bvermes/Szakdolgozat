@@ -13,4 +13,5 @@ class MainViewModel @Inject constructor(
 
 
     val readAll = teamRepository.readAll
+    val findAlaves = teamRepository.findAlaves
 }
