@@ -1,5 +1,6 @@
 package hu.bme.aut.pred2
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -70,7 +71,7 @@ class TeamActivity : AppCompatActivity(), TeamAdapter.TeamClickListener {
     }
 
     private fun initRecyclerView() {
-        adapter = TeamAdapter(this)
+        adapter = TeamAdapter(this, this)
         binding.rvTeam.layoutManager = LinearLayoutManager(this)
         binding.rvTeam.adapter = adapter
         loadItemsInBackground()

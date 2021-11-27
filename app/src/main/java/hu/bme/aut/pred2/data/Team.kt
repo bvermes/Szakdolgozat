@@ -1,5 +1,7 @@
 package hu.bme.aut.pred2.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -36,5 +38,79 @@ data class Team(
     @ColumnInfo(name = "avwins") var avwins: Float,
     @ColumnInfo(name = "avdraws") var avdraws: Float,
     @ColumnInfo(name = "avloses") var avloses: Float,
-) {
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat(),
+        parcel.readFloat()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeInt(field1)
+        parcel.writeString(teamname)
+        parcel.writeInt(matches_played)
+        parcel.writeInt(overall)
+        parcel.writeFloat(attackingRating)
+        parcel.writeFloat(midfieldRating)
+        parcel.writeFloat(defenceRating)
+        parcel.writeFloat(clubWorth)
+        parcel.writeFloat(xIAverageAge)
+        parcel.writeFloat(defenceWidth)
+        parcel.writeFloat(defenceDepth)
+        parcel.writeFloat(offenceWidth)
+        parcel.writeFloat(likes)
+        parcel.writeFloat(dislikes)
+        parcel.writeFloat(avgoals)
+        parcel.writeFloat(avconceded)
+        parcel.writeFloat(avgoalattempts)
+        parcel.writeFloat(avshotsongoal)
+        parcel.writeFloat(avshotsoffgoal)
+        parcel.writeFloat(avblockedshots)
+        parcel.writeFloat(avpossession)
+        parcel.writeFloat(avfreekicks)
+        parcel.writeFloat(avGoalDiff)
+        parcel.writeFloat(avwins)
+        parcel.writeFloat(avdraws)
+        parcel.writeFloat(avloses)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Team> {
+        override fun createFromParcel(parcel: Parcel): Team {
+            return Team(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Team?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
