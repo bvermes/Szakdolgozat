@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         })
         button.setOnClickListener(View.OnClickListener {
             var v1: Float = ed1.text.toString().toFloat()
-            var inputs: Array<Float> = arrayOf(v1, 3F, 3F, 3F, 0F, 10F, 10F, 10F, 1.5F, 3F, 5F)
+            var inputs: Array<Float> = arrayOf(v1, 0.toFloat(), 0.toFloat(), 0.toFloat(), 0.toFloat(), 10.0.toFloat(), 10.0.toFloat(), 10.0.toFloat(), 1.5.toFloat(), 3.0.toFloat(), 5.0.toFloat())
             var results = classifySequence(inputs)
             var class1 = results[0]
             var class2 = results[1]
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun classifySequence (sequence: Array<Float>): FloatArray {
-        val inputs : Array<FloatArray> = arrayOf( sequence.map { it.toFloat() }.toFloatArray() )
+        val inputs : Array<FloatArray> = arrayOf( sequence.map { it.toFloat() }.toFloatArray())
         var outputs : Array<FloatArray> = arrayOf( FloatArray( 3 ) )
         tflite?.run( inputs , outputs )
         return outputs[0]
