@@ -24,4 +24,5 @@
     <string name="average_goal_difference">Average goal difference</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
 </resources>

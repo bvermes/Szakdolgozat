@@ -547,8 +547,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/basictv"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/avdraws"
+                app:layout_constraintEnd_toStartOf="@+id/avdraws"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
             <TextView
@@ -557,8 +557,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/basictv"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/avwins"
-                app:layout_constraintStart_toEndOf="@+id/avloses"
+                app:layout_constraintEnd_toStartOf="@+id/avloses"
+                app:layout_constraintStart_toEndOf="@+id/avwins"
                 app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
             <TextView
@@ -567,8 +567,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/basictv"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/avdraws"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/avdraws"
                 app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
             <ImageButton

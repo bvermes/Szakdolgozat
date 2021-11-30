@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import hu.bme.aut.pred2.R.id.button
-import hu.bme.aut.pred2.R.id.editTextNumberDecimal
 import org.tensorflow.lite.Interpreter
 import androidx.fragment.app.activityViewModels
 import java.io.FileInputStream
@@ -15,10 +14,12 @@ import java.io.IOException
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import android.R.attr.value
+import android.annotation.SuppressLint
 
 import android.content.Intent
 import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import hu.bme.aut.pred2.adapter.TeamAdapter
@@ -28,6 +29,8 @@ import hu.bme.aut.pred2.data.TeamDatabase
 import hu.bme.aut.pred2.databinding.ActivityMainBinding
 import hu.bme.aut.pred2.databinding.ActivityTeamDetailsBinding
 import kotlinx.coroutines.flow.collect
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -43,31 +46,85 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var database: TeamDatabase
     private var items = mutableListOf<Team>()
+    private lateinit var hometeam : Team
+    private lateinit var awayteam : Team
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         database = TeamDatabase.getDatabase(applicationContext)
         initItems()
+        //https://stackoverflow.com/questions/6092093/how-to-put-an-app-main-thread-to-sleep-to-show-progress-dialog-changes
+        //thread altatása ameddig vissza nem érkeznek a csapatok listája
         try {
-            Thread.sleep(200)
+            Thread.sleep(300)
         } catch (e: InterruptedException) {
             //handle
         }
         Log.i("MainActivity",items.size.toString())
-        var team: Team = items[0]
-        when (team.field1) {
-            4 -> binding.homeiv.setImageResource(R.drawable.alaves)
-            5 -> binding.homeiv.setImageResource(R.drawable.almeria)
-            6 -> binding.homeiv.setImageResource(R.drawable.levante)
-            else ->binding.homeiv.setImageResource(R.drawable.real_madrid)
+
+        ////////////////////meccselem létrehozás
+        for (item in items){
+            if(item.teamname == "Getafe") {
+                hometeam = item
+            }
+            if(item.teamname == "Ath_Bilbao"){
+                awayteam = item
+            }
         }
-        //TODO match = getMatchItem()
+        val countDateUntil = "2021-12-06 21:00:00"
+        bindteamicon(hometeam,0)
+        bindteamicon(awayteam,1)
+        var input_bethomewinodds: Float = 3.4.toFloat()
+        var input_betdrawodds: Float = 3.0.toFloat()
+        var input_betguestwinodds: Float = 2.3.toFloat()
+        binding.bethometv.setText(input_bethomewinodds.toString())
+        binding.betdrawtv.setText(input_betdrawodds.toString())
+        binding.betawaytv.setText(input_betguestwinodds.toString())
+        /////////////////////////////////////
+        // Kiértékeléshez szükséges attribútumok
+        // 'OverallRatingDiff','AttackingRatingDiff','MidfieldRatingDiff','DefenceRatingDiff','AverageAgeDiff','DefenceWidthDiff','DefenceDepthDiff','OffenceWidthDiff','bethomewinodds','betdrawodds','betguestwinodds'
+        //betoddsok meg vannak adva
+        var input_OverallRatingDiff : Float = (hometeam.overall - awayteam.overall).toFloat()
+        var input_AttackingRatingDiff : Float = (hometeam.attackingRating - awayteam.attackingRating).toFloat()
+        var input_MidfieldRatingDiff : Float = (hometeam.midfieldRating - awayteam.midfieldRating).toFloat()
+        var input_DefenceRatingDiff : Float = (hometeam.defenceRating - awayteam.defenceRating).toFloat()
+        var input_AverageAgeDiff : Float = (hometeam.xIAverageAge - awayteam.xIAverageAge).toFloat()
+        var input_DefenceWidthDiff : Float = (hometeam.defenceWidth - awayteam.defenceWidth).toFloat()
+        var input_DefenceDepthDiff : Float = (hometeam.defenceDepth - awayteam.defenceDepth).toFloat()
+        var input_OffenceWidthDiff : Float = (hometeam.offenceWidth - awayteam.offenceWidth).toFloat()
 
+        /////////////////////Visszaszámoló
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val now = Date()
+        try {
+            val date = sdf.parse(countDateUntil)
+            val currentTime = now.time
+            val christmasDate = date.time
+            val countDownToChristmas = christmasDate - currentTime
+            binding.cCounter.start(countDownToChristmas)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
 
+        fun countDate(d: String): Boolean{
+            val dateDay = sdf.parse(d)
+            val dayDate = dateDay.time
+            val currentTime = now.time
+            val countDownToDay = dayDate - currentTime
+            val end = 0
+            when {
+                (countDownToDay <= end.toLong()) -> {
+                    return true
+                }
+            }
+            return false
+        }
+        //////////////////////////////////////////
 
-        //Modell implementálás
+        //////////////////////////Modell implementálás
 //https://github.com/shubham0204/Spam_Classification_Android_Demo/blob/master/app/src/main/java/com/ml/quaterion/spamo/Classifier.kt
 //https://www.youtube.com/watch?v=RhjBDxpAOIc&ab_channel=TensorFlow
         tflite = Interpreter( loadModelFile() )
@@ -81,9 +138,21 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TeamActivity::class.java)
             startActivity(intent)
         })
+
         button.setOnClickListener(View.OnClickListener {
-            var v1: Float = binding.editTextNumberDecimal.text.toString().toFloat()
-            var inputs: Array<Float> = arrayOf(v1, 0.toFloat(), 0.toFloat(), 0.toFloat(), 0.toFloat(), 10.0.toFloat(), 10.0.toFloat(), 10.0.toFloat(), 1.5.toFloat(), 3.0.toFloat(), 5.0.toFloat())
+            var inputs: Array<Float> = arrayOf(
+                input_OverallRatingDiff,
+                input_AttackingRatingDiff,
+                input_MidfieldRatingDiff,
+                input_DefenceRatingDiff,
+                input_AverageAgeDiff,
+                input_DefenceWidthDiff,
+                input_DefenceDepthDiff,
+                input_OffenceWidthDiff,
+                input_bethomewinodds,
+                input_betdrawodds,
+                input_betguestwinodds
+            )
             var results = classifySequence(inputs)
             var class1 = results[0]
             var class2 = results[1]
@@ -92,9 +161,9 @@ class MainActivity : AppCompatActivity() {
             Drawtv.setText(class2.toString())
             Awaytv.setText(class3.toString())
         })
-
+        ////////////////////////////////////////
     }
-
+    //////////////////csapatadatok betöltése
     private fun initItems() {
         thread {
             var itemlist = database.teamDao().getAll()
@@ -105,7 +174,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //TODO https://github.com/tensorflow/tensorflow/issues/31688
-    //elméletileg a tensorflow lite nem támogatja a sigmoid eljárást csak a relut
+    //elméletileg a tensorflow lite nem támogatja a sigmoid eljárást csak a relu-t
     //https://www.tensorflow.org/lite/guide/ops_compatibility
     @Throws(IOException::class)
     private fun loadModelFile(): MappedByteBuffer {
@@ -131,4 +200,49 @@ class MainActivity : AppCompatActivity() {
         betdrawodds = _betdrawodds,
         betawayodds = _betawayodds
     )
+
+    private fun bindteamicon(team: Team, i: Int){
+        var img: ImageView
+        if(i ==0){
+            img = binding.homeiv
+        }
+        else{
+            img = binding.awayiv
+        }
+
+        when (team.field1) {
+            0 ->img.setImageResource(R.drawable.alaves)
+            1 ->img.setImageResource(R.drawable.almeria)
+            2 ->img.setImageResource(R.drawable.ath_bilbao)
+            3 ->img.setImageResource(R.drawable.atl_madrid)
+            4 ->img.setImageResource(R.drawable.barcelona)
+            5 ->img.setImageResource(R.drawable.betis)
+            6 ->img.setImageResource(R.drawable.cadiz)
+            7 ->img.setImageResource(R.drawable.celta_vigo)
+            8 ->img.setImageResource(R.drawable.cordoba)
+            9 ->img.setImageResource(R.drawable.deportivo)
+            10 ->img.setImageResource(R.drawable.eibar)
+            11 ->img.setImageResource(R.drawable.elche)
+            12 ->img.setImageResource(R.drawable.espanyol)
+            13 ->img.setImageResource(R.drawable.getafe)
+            14 ->img.setImageResource(R.drawable.gijon)
+            15 ->img.setImageResource(R.drawable.girona)
+            16 ->img.setImageResource(R.drawable.granada)
+            17 ->img.setImageResource(R.drawable.huesca)
+            18 ->img.setImageResource(R.drawable.las_palmas)
+            19 ->img.setImageResource(R.drawable.leganes)
+            20 ->img.setImageResource(R.drawable.levante)
+            21 ->img.setImageResource(R.drawable.malaga)
+            22 ->img.setImageResource(R.drawable.mallorca)
+            23 ->img.setImageResource(R.drawable.osasuna)
+            24 ->img.setImageResource(R.drawable.rayo_vallecano)
+            25 ->img.setImageResource(R.drawable.real_madrid)
+            26 ->img.setImageResource(R.drawable.real_sociedad)
+            27 ->img.setImageResource(R.drawable.sevilla)
+            28 ->img.setImageResource(R.drawable.valencia)
+            29 ->img.setImageResource(R.drawable.valladolid)
+            30 ->img.setImageResource(R.drawable.villarreal)
+            else -> img.setImageResource(R.drawable.barcelona)
+        }
+    }
 }
