@@ -82,7 +82,7 @@ class PictureDialogFragment: DialogFragment() {
             29 ->binding.prematchcorrIV.setImageResource(R.drawable.valladolidprematchcorr)
             30 ->binding.prematchcorrIV.setImageResource(R.drawable.villarrealprematchcorr)
             100 ->binding.prematchcorrIV.setImageResource(R.drawable.alavesaftmatchcorr)
-            101 ->binding.prematchcorrIV.setImageResource(R.drawable.almeriaaftmatchcorr)
+            101 ->binding.prematchcorrIV.setImageResource(R.drawable.almeriaaftmatchcorr);
             102 ->binding.prematchcorrIV.setImageResource(R.drawable.ath_bilbaoaftmatchcorr)
             103 ->binding.prematchcorrIV.setImageResource(R.drawable.atl_madridaftmatchcorr)
             104 ->binding.prematchcorrIV.setImageResource(R.drawable.barcelonaaftmatchcorr)

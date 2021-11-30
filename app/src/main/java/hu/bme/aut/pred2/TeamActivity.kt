@@ -82,6 +82,7 @@ class TeamActivity : AppCompatActivity(), TeamAdapter.TeamClickListener {
             runOnUiThread {
                 adapter.update(items)
             }
+
         }
     }
 
