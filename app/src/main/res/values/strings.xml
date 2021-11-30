@@ -22,4 +22,6 @@
     <string name="average_possession">Average possession</string>
     <string name="average_free_kicks">Average free kicks</string>
     <string name="average_goal_difference">Average goal difference</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

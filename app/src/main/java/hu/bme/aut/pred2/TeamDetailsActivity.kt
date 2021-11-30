@@ -66,6 +66,13 @@ class TeamDetailsActivity : AppCompatActivity() {
         binding.likestv.text = team?.likes.toString()
         binding.disliketv.text = team?.dislikes.toString()
 
+        //https://stackoverflow.com/questions/55191156/how-to-pass-data-from-fragment-to-dialogfragment
+        binding.prematchcorrIb.setOnClickListener{
+           val fm = supportFragmentManager
+            val dialog = PictureDialogFragment.newInstance(team!!.field1)
+            dialog.show(fm, "dialog")
+        }
+
         //meccs utáni statisztikák(Adatbányászati adatok)
         binding.avgoalscoredtv.text = team?.avgoals.toString()
         binding.avgoalconcededtv.text = team?.avconceded.toString()
@@ -75,7 +82,20 @@ class TeamDetailsActivity : AppCompatActivity() {
         binding.avblockedtv.text = team?.avblockedshots.toString()
         binding.avposstv.text = team?.avpossession.toString()
         binding.avfreekickstv.text = team?.avfreekicks.toString()
-        binding.avgoaldifftv.text = team?.avGoalDiff.toString()
 
+        binding.avwins.text = team?.avwins.toString()
+        binding.avdraws.text = team?.avdraws.toString()
+        binding.avloses.text = team?.avloses.toString()
+
+        binding.aftermatchcorrIb.setOnClickListener {
+            val fm = supportFragmentManager
+            val dialog = PictureDialogFragment.newInstance(team!!.field1+100)
+            dialog.show(fm, "dialog")
+        }
+        binding.aftermatchstatsIb.setOnClickListener {
+            val fm = supportFragmentManager
+            val dialog = PictureDialogFragment.newInstance(team!!.field1+200)
+            dialog.show(fm, "dialog")
+        }
     }
 }

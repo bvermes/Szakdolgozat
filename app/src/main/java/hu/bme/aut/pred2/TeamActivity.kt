@@ -22,7 +22,6 @@ class TeamActivity : AppCompatActivity(), TeamAdapter.TeamClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityTeamBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         database = TeamDatabase.getDatabase(applicationContext)
         //onTeamCreated(getTeamItem(0,"Alaves",190,74.0,75.0,73.0,75.0,13.0,28.64,50.0,30.0,70.0,45.0,15.0,1.0,1.36315789473684,9.83157894736842,3.14210526315789,4.52631578947368,2.16315789473684,42.0736842105263,15.5263157894737,0.289473684210526,0.321052631578947,0.242105263157895,0.436842105263158))
         //onTeamCreated(getTeamItem(1,"Almeria",76,72.0,73.0,70.0,71.0,150.0,25.18,45.0,37.0,54.0,32.0,5.0,1.02631578947368,1.77631578947368,10.4078947368421,3.47368421052632,4.55263157894737,2.38157894736842,43.8684210526316,15.2631578947368,0.407894736842105,0.25,0.197368421052632,0.552631578947369))

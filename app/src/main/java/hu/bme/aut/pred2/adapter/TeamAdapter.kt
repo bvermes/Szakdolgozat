@@ -58,7 +58,7 @@ class TeamAdapter(private val listener: TeamClickListener, val context: Context)
             else -> holder.binding.ivIcon.setImageResource(R.drawable.barcelona)
         }
         holder.binding.tvName.text = team.teamname
-        holder.binding.tvValue.text = team.clubWorth.toString()
+        holder.binding.tvOverall.text = team.overall.toString()
         holder.itemView.setOnClickListener({
             //holder.binding.tvName.text = "Szia"
             val intent = Intent(context, TeamDetailsActivity::class.java)

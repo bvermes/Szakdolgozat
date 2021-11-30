@@ -7,23 +7,25 @@
         android:layout_height="match_parent"
         tools:context=".TeamActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
+            android:id="@+id/LinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <ImageView
+                android:id="@+id/laliga"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorSecondary" />
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/laligalogo">
 
-        </com.google.android.material.appbar.AppBarLayout>
+            </ImageView>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTeam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginTop="100dp"
             tools:listitem="@layout/team_list" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

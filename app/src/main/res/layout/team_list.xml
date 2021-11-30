@@ -21,19 +21,36 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvName"
+        android:orientation="horizontal">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Apple" />
+            android:layout_weight="2">
 
-        <TextView
-            android:id="@+id/tvValue"
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                tools:text="Deportivo" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="My favorite fruit" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvOverall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textSize="50sp"
+                tools:text="84" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

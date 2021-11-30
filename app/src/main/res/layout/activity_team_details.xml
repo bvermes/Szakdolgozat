@@ -28,9 +28,9 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="850dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/teamiv">
 
@@ -305,6 +305,17 @@
                 app:layout_constraintStart_toEndOf="@+id/likestv"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
+            <ImageButton
+                android:id="@+id/prematchcorrIb"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/matric_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/disliketv" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -499,29 +510,87 @@
                 tools:layout_editor_absoluteX="174dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
-
-
             <TextView
-                android:id="@+id/textView37"
+                android:id="@+id/textView38"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/average_goal_difference"
+                android:text="Average loses"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView39"
+                android:textSize="20sp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/avfreekickstv" />
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average draws"
+                app:layout_constraintEnd_toStartOf="@+id/textView38"
+                app:layout_constraintStart_toEndOf="@+id/textView34"
+                android:textSize="20sp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/avfreekickstv" />
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average wins"
+                app:layout_constraintStart_toEndOf="@+id/textView39"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textSize="20sp"
                 android:layout_marginTop="24dp"
-                tools:layout_editor_absoluteX="174dp"
                 app:layout_constraintTop_toBottomOf="@+id/avfreekickstv" />
+
             <TextView
-                android:id="@+id/avgoaldifftv"
+                android:id="@+id/avwins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/basictv"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:textSize="20sp"
-                tools:layout_editor_absoluteX="174dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView37" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/avdraws"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+            <TextView
+                android:id="@+id/avdraws"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/basictv"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/avwins"
+                app:layout_constraintStart_toEndOf="@+id/avloses"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+            <TextView
+                android:id="@+id/avloses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/basictv"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/avdraws"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+            <ImageButton
+                android:id="@+id/aftermatchcorrIb"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/matric_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/aftermatchstatsIb"
+                app:layout_constraintTop_toBottomOf="@+id/avloses"
+                tools:ignore="ContentDescription" />
+            <ImageButton
+                android:id="@+id/aftermatchstatsIb"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/statisticsicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/aftermatchcorrIb"
+                app:layout_constraintTop_toBottomOf="@+id/avloses"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
