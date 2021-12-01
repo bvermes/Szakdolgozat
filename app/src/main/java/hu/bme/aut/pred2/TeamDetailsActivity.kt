@@ -1,7 +1,10 @@
 package hu.bme.aut.pred2
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import hu.bme.aut.pred2.data.Team
 import hu.bme.aut.pred2.databinding.ActivityTeamDetailsBinding
 
@@ -51,20 +54,26 @@ class TeamDetailsActivity : AppCompatActivity() {
 
         //meccs előtti statisztikák(Fifa adatok)
         binding.teamnametv.text = team?.teamname.toString()
-        binding.attacktv.text = team?.attackingRating.toString()
-        binding.midfieldtv.text = team?.midfieldRating.toString()
-        binding.defendtv.text = team?.defenceRating.toString()
         binding.overall.text = team?.overall.toString()
-        binding.attacktv.text = team?.attackingRating.toString()
-        binding.midfieldtv.text =team?.midfieldRating.toString()
-        binding.defendtv.text = team?.defenceRating.toString()
-        binding.clubworthtv.text = team?.clubWorth.toString()
-        binding.averageagetv.text = team?.xIAverageAge.toString()
-        binding.defencewtv.text = team?.defenceWidth.toString()
-        binding.defencedtv.text = team?.defenceDepth.toString()
-        binding.offencewtv.text = team?.offenceWidth.toString()
-        binding.likestv.text = team?.likes.toString()
-        binding.disliketv.text = team?.dislikes.toString()
+        binding.attacktv.text = team?.attackingRating?.toInt().toString()
+        binding.midfieldtv.text = team?.midfieldRating?.toInt().toString()
+        binding.defendtv.text = team?.defenceRating?.toInt().toString()
+        binding.clubworthtv.text = team?.clubWorth?.toInt().toString() + " Million"
+        binding.averageagetv.text = team?.xIAverageAge.toString() + " years"
+        binding.defencewtv.text = team?.defenceWidth?.toInt().toString()
+        binding.defencedtv.text = team?.defenceDepth?.toInt().toString()
+        binding.offencewtv.text = team?.offenceWidth?.toInt().toString()
+        binding.likestv.text = team?.likes?.toInt().toString()
+        binding.disliketv.text = team?.dislikes?.toInt().toString()
+
+        //overall = 0
+        // attackingRating = 1
+        //midfieldRating = 2
+        //defenceRating = 3
+        team?.overall?.let { coloring(it.toFloat(), 0) }
+        team?.let { coloring(it.attackingRating,1) }
+        team?.let { coloring(it.midfieldRating,2) }
+        team?.let { coloring(it.defenceRating,3) }
 
         //https://stackoverflow.com/questions/55191156/how-to-pass-data-from-fragment-to-dialogfragment
         binding.prematchcorrIb.setOnClickListener{
@@ -96,6 +105,33 @@ class TeamDetailsActivity : AppCompatActivity() {
             val fm = supportFragmentManager
             val dialog = PictureDialogFragment.newInstance(team!!.field1+200)
             dialog.show(fm, "dialog")
+        }
+    }
+
+    //overall = 0
+    // attackingRating = 1
+    //midfieldRating = 2
+    //defenceRating = 3
+
+    private fun coloring(sz: Float,type: Int){
+        var tv: TextView
+        if(type == 0){
+            tv = binding.overall
+        } else if(type ==1){
+            tv = binding.attacktv
+        } else if(type ==2){
+            tv = binding.midfieldtv
+        } else if(type ==3){
+            tv = binding.defendtv
+        } else{
+            tv = binding.overall
+        }
+        if(sz > 80){
+            tv.setBackgroundColor(Color.parseColor("#11CD19"))
+        }else if (sz < 81 && sz > 74){
+            tv.setBackgroundColor(Color.parseColor("#5BE361"))
+        }else {
+            tv.setBackgroundColor(Color.parseColor("#FDC622"))
         }
     }
 }

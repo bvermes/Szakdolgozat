@@ -2,6 +2,7 @@ package hu.bme.aut.pred2.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -59,6 +60,14 @@ class TeamAdapter(private val listener: TeamClickListener, val context: Context)
         }
         holder.binding.tvName.text = team.teamname
         holder.binding.tvOverall.text = team.overall.toString()
+        //https://stackoverflow.com/questions/8090459/android-dynamically-change-textview-background-color/8090505
+        if(team.overall > 80){
+            holder.binding.tvOverall.setBackgroundColor(Color.parseColor("#11CD19"))
+        }else if (team.overall <= 80 && team.overall > 74){
+            holder.binding.tvOverall.setBackgroundColor(Color.parseColor("#5BE361"))
+        }else {
+            holder.binding.tvOverall.setBackgroundColor(Color.parseColor("#FDC622"))
+        }
         holder.itemView.setOnClickListener({
             //holder.binding.tvName.text = "Szia"
             val intent = Intent(context, TeamDetailsActivity::class.java)

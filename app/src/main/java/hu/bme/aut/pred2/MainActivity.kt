@@ -15,6 +15,7 @@ import android.annotation.SuppressLint
 
 import android.content.Intent
 import android.provider.SyncStateContract.Helpers.update
+import android.system.Os.bind
 import android.system.Os.close
 import android.util.Log
 import android.view.MenuItem
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private var items = mutableListOf<Team>()
     private lateinit var hometeam : Team
     private lateinit var awayteam : Team
+    private lateinit var hometeamiv : ImageView
+    private lateinit var awayteamiv : ImageView
 
     lateinit var toggle : ActionBarDrawerToggle
 
@@ -59,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         database = TeamDatabase.getDatabase(applicationContext)
         initItems()
+
 
         //https://www.youtube.com/watch?v=do4vb0MdLFY&ab_channel=PhilippLackner
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.Open, R.string.Close)
@@ -103,6 +107,20 @@ class MainActivity : AppCompatActivity() {
         binding.bethometv.setText(input_bethomewinodds.toString())
         binding.betdrawtv.setText(input_betdrawodds.toString())
         binding.betawaytv.setText(input_betguestwinodds.toString())
+        hometeamiv = binding.homeiv
+        awayteamiv = binding.awayiv
+        hometeamiv.setOnClickListener{
+            //holder.binding.tvName.text = "Szia"
+            val intent = Intent(this, TeamDetailsActivity::class.java)
+            intent.putExtra("team", hometeam)
+            startActivity(intent)
+        }
+        awayteamiv.setOnClickListener{
+            //holder.binding.tvName.text = "Szia"
+            val intent = Intent(this, TeamDetailsActivity::class.java)
+            intent.putExtra("team", awayteam)
+            startActivity(intent)
+        }
         /////////////////////////////////////
         // Kiértékeléshez szükséges attribútumok
         // 'OverallRatingDiff','AttackingRatingDiff','MidfieldRatingDiff','DefenceRatingDiff','AverageAgeDiff','DefenceWidthDiff','DefenceDepthDiff','OffenceWidthDiff','bethomewinodds','betdrawodds','betguestwinodds'
@@ -149,15 +167,9 @@ class MainActivity : AppCompatActivity() {
 //https://www.youtube.com/watch?v=RhjBDxpAOIc&ab_channel=TensorFlow
         tflite = Interpreter( loadModelFile() )
         var button = binding.button
-        var teambutton = binding.teams
         var Hometv = binding.HometextView
         var Drawtv = binding.DrawtextView
         var Awaytv  = binding.AwaytextView
-
-        teambutton.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, TeamActivity::class.java)
-            startActivity(intent)
-        })
 
         button.setOnClickListener(View.OnClickListener {
             var inputs: Array<Float> = arrayOf(
@@ -273,4 +285,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
