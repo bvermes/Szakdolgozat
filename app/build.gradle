@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.github.iwgang:countdownview:2.1.6'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //https://www.youtube.com/watch?v=do4vb0MdLFY&ab_channel=PhilippLackner
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 }
 kapt {
     correctErrorTypes = true

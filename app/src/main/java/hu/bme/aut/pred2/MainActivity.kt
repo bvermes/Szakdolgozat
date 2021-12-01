@@ -3,9 +3,6 @@ package hu.bme.aut.pred2
 import android.R.attr
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import hu.bme.aut.pred2.R.id.button
 import org.tensorflow.lite.Interpreter
 import androidx.fragment.app.activityViewModels
@@ -18,10 +15,14 @@ import android.annotation.SuppressLint
 
 import android.content.Intent
 import android.provider.SyncStateContract.Helpers.update
+import android.system.Os.close
 import android.util.Log
-import android.widget.ImageView
+import android.view.MenuItem
+import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import hu.bme.aut.pred2.R.id.drawerLayout
 import hu.bme.aut.pred2.adapter.TeamAdapter
 import hu.bme.aut.pred2.data.Match
 import hu.bme.aut.pred2.data.Team
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hometeam : Team
     private lateinit var awayteam : Team
 
+    lateinit var toggle : ActionBarDrawerToggle
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         database = TeamDatabase.getDatabase(applicationContext)
         initItems()
+
+        //https://www.youtube.com/watch?v=do4vb0MdLFY&ab_channel=PhilippLackner
+        toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.Open, R.string.Close)
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.predictor_nav -> Toast.makeText(applicationContext,"Alright", Toast.LENGTH_SHORT)
+                R.id.team_nav -> {
+                    val intent = Intent(this, TeamActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
         //https://stackoverflow.com/questions/6092093/how-to-put-an-app-main-thread-to-sleep-to-show-progress-dialog-changes
         //thread altatása ameddig vissza nem érkeznek a csapatok listája
         try {
@@ -244,5 +264,13 @@ class MainActivity : AppCompatActivity() {
             30 ->img.setImageResource(R.drawable.villarreal)
             else -> img.setImageResource(R.drawable.barcelona)
         }
+    }
+
+    //menu miatt
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
