@@ -37,7 +37,7 @@ import java.util.*
 import kotlin.concurrent.thread
 
 //////
-private val MODEL_ASSETS_PATH = "dfwinnerpredict1121.tflite"
+private val MODEL_ASSETS_PATH = "dfwinnerpredictraw1206.tflite"
 private var tflite : Interpreter? = null
 ///////
 
@@ -181,9 +181,10 @@ class MainActivity : AppCompatActivity() {
                 input_DefenceWidthDiff,
                 input_DefenceDepthDiff,
                 input_OffenceWidthDiff,
+                5.toFloat(),
                 input_bethomewinodds,
                 input_betdrawodds,
-                input_betguestwinodds
+                input_betguestwinodds,
             )
             var results = classifySequence(inputs)
             var class1 = results[0]
