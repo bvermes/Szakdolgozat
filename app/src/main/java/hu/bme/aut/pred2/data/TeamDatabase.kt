@@ -16,7 +16,7 @@ abstract class TeamDatabase : RoomDatabase(){
                 applicationContext,
                 TeamDatabase::class.java,
                 "team-list"
-            ).build();
+            ).build()
         }
     }
 }

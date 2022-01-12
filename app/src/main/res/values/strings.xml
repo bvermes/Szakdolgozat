@@ -3,7 +3,7 @@
     <string name="basictv">TextView</string>
     <string name="attack">Attack</string>
     <string name="midfield">Midfield</string>
-    <string name="defendce">Defendce</string>
+    <string name="defence">Defence</string>
     <string name="name">Name</string>
     <string name="overall">Overall</string>
     <string name="clubworth">Clubworth</string>

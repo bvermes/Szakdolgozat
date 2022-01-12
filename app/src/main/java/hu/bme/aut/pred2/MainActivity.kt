@@ -100,20 +100,22 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity",items.size.toString())
         ////////////////////meccselem létrehozás
         for (item in items){
-            if(item.teamname == "Getafe") {
+            if(item.teamname == "Real_Madrid") {
                 hometeam = item
             }
-            if(item.teamname == "Ath_Bilbao"){
+            if(item.teamname == "Valencia"){
                 awayteam = item
             }
         }
 
-        val countDateUntil = "2021-12-06 21:00:00"
+        val countDateUntil = "2022-01-08 21:00:00"
         bindteamicon(hometeam,0)
         bindteamicon(awayteam,1)
-        var input_bethomewinodds: Float = 3.4.toFloat()
-        var input_betdrawodds: Float = 3.0.toFloat()
-        var input_betguestwinodds: Float = 2.3.toFloat()
+        var input_bethomewinodds: Float = 1.36.toFloat()
+        var input_betdrawodds: Float = 5.toFloat()
+        var input_betguestwinodds: Float = 8.toFloat()
+        var homeform: Float = 10.toFloat()
+        var awayform: Float = 10.toFloat()
         binding.bethometv.setText(input_bethomewinodds.toString())
         binding.betdrawtv.setText(input_betdrawodds.toString())
         binding.betawaytv.setText(input_betguestwinodds.toString())
@@ -143,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         var input_DefenceWidthDiff : Float = (hometeam.defenceWidth - awayteam.defenceWidth).toFloat()
         var input_DefenceDepthDiff : Float = (hometeam.defenceDepth - awayteam.defenceDepth).toFloat()
         var input_OffenceWidthDiff : Float = (hometeam.offenceWidth - awayteam.offenceWidth).toFloat()
-
+        var input_FormDiff: Float = homeform - awayform
         /////////////////////Visszaszámoló
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val now = Date()
@@ -191,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                 input_DefenceWidthDiff,
                 input_DefenceDepthDiff,
                 input_OffenceWidthDiff,
-                5.toFloat(),
+                input_FormDiff,
                 input_bethomewinodds,
                 input_betdrawodds,
                 input_betguestwinodds,
